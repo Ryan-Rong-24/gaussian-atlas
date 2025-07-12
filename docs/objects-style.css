@@ -94,7 +94,7 @@ h3 {
 
 #menu_list {
   margin-bottom: 2rem;
-  max-height: 60vh;
+  max-height: 50vh;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #4fc3f7 transparent;
@@ -179,7 +179,7 @@ h3 {
   }
 
   #menu_list {
-    max-height: 50vh;
+    max-height: 40vh;
   }
 }
 

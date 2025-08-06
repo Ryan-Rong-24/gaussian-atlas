@@ -15,7 +15,7 @@ export const GalleryViewer = ({ onBackToLanding }: GalleryViewerProps) => {
       iframe.style.width = '100%';
       iframe.style.height = '100vh';
       iframe.style.border = 'none';
-      iframe.src = '/gallery/gallery.html'; // Point to the gallery in the subdirectory
+      iframe.src = './gallery/gallery.html'; // Use relative path for GitHub Pages compatibility
       
       // Clear existing content and add iframe
       const container = document.getElementById('gallery-container');

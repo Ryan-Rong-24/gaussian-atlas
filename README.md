@@ -1,65 +1,69 @@
-# Gaussian Atlas - 3D Object Gallery
+# Gaussian Verse • 3D Gaussian Atlas Dataset
 
-A standalone web application for viewing 3D Gaussian Splat objects from the 1918 collection.
+Project [website](https://cs.stanford.edu/~xtiange/projects/gaussianatlas/).
 
-## Quick Start
+## Integration
 
-### Method 1: Using Python (Recommended for local testing)
+This project integrates two components:
+
+1. **React Landing Page** (`docs/`): Modern landing page with video previews
+2. **Interactive 3D Gallery**: Full 3D viewer with gaussian splat rendering
+
+### Gallery Integration
+- "Enter Gallery" button loads the interactive 3D viewer in an iframe
+- The 3D viewer uses gaussian splat technology to render high-fidelity 3D objects
+- Users can orbit around objects and switch between different 3D models
+
+## Development
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Setup
 ```bash
-cd gaussianatlas
-python3 serve.py
-```
-Then open http://localhost:8000 in your browser.
-
-### Method 2: Using any HTTP server
-You can use any static file server:
-```bash
-# Python (alternative)
-python3 -m http.server 8000
-
-# Node.js (if you have it)
-npx http-server -p 8000
-
-# PHP (if you have it)
-php -S localhost:8000
+cd docs
+npm install
+npm run dev
 ```
 
-### Method 3: Web deployment
-Upload all files to any web hosting service (GitHub Pages, Netlify, Vercel, etc.)
+The application will be available at `http://localhost:8080`
 
-## Files Structure
+### Project Structure
 
-- **index.html** - Main interactive gallery with object showcase
-- **objects.js** - Configuration for all 3D objects
-- **objects-style.css** - Styles for the main gallery
-- **style.css** - Additional styles
-- **dist/spark.module.js** - Spark 3D engine
-- **js/** - Utility scripts (preloader, asset loading)
-- **data/1918/** - 3D object data files (.ply format)
-- **serve.py** - Simple Python server for local testing
+```
+docs/
+├── src/
+│   ├── components/
+│   │   ├── LandingPage.tsx      # Main landing page
+│   │   ├── HeroSection.tsx       # Hero with video grid
+│   │   ├── GalleryViewer.tsx     # 3D gallery iframe wrapper
+│   │   └── VideoGallery.tsx      # Video preview components
+│   └── pages/
+│       └── Index.tsx             # Main page routing
+├── public/
+│   ├── video/                    # 15 object preview videos (boomerang)
+│   ├── data/                     # 3D model data files
+│   ├── index.html                # Interactive 3D gallery
+│   ├── objects.js                # Object definitions
+│   ├── objects-style.css         # Gallery styling
+│   └── spark.module.js           # 3D rendering library
+```
 
-## Usage
+## Technologies Used
 
-- Open `index.html` in a web browser for the main gallery
-- Click on object names in the menu to switch between different 3D objects
-- Use mouse to orbit around the objects
-- Mobile-friendly responsive design
+- **Rendering** [Spark](https://github.com/sparkjsdev/spark?tab=readme-ov-file#getting-started)
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui
+- **3D Rendering**: Three.js, Spark.js (gaussian splats)
+- **Video**: HTML5 video with intersection observer for performance
+- **Routing**: React Router DOM
+- **Deployment**: GitHub Pages
 
-## Requirements
+## Assets
 
-- Modern web browser with WebGL2 support
-- HTTP server (required for loading assets - won't work from file:// protocol)
-- Python 3 (for local testing with serve.py)
+- **Videos**: 15 `.mp4` boomerang files showing rotating 3D object examples
+- **3D Models**: Point cloud files (`.ply`) for gaussian splat rendering
+- **Gallery**: Interactive HTML viewer with Spark adn Three.js integration
 
-## Asset Sources
-
-The 3D objects are loaded from the local `data/1918/` directory. Each object includes:
-- Point cloud data (.ply files)
-- Captions and metadata
-- Scaling and positioning information
-
-## Troubleshooting
-
-- **Can't load assets**: Make sure you're running from an HTTP server, not opening the file directly
-- **Objects not showing**: Check browser console for errors, ensure all files are present
-- **Slow loading**: Large PLY files may take time to load on first visit 
+## License

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaussian Verse • 3D Objects Dataset</title>
+  <link rel="stylesheet" href="objects-style.css">
+</head>
+
+<body>
+  <a href="#" id="mobile_button">Gallery</a>
+  <div id="menu">
+    <div class="border">
+      <div class="border">
+        <h1>Gaussian Verse</h1>
+        <!-- <h2>OBJECT COLLECTION</h2> -->
+        <div id="menu_list"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Caption display at the bottom of the screen -->
+  <div id="caption_display">
+    <p id="caption_text"></p>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/",
+        "@sparkjsdev/spark": "./dist/spark.module.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from "three";
+    import { SplatMesh } from "@sparkjsdev/spark";
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { OBJECT_ASSETS, OBJECTS_URL } from './objects.js';
+
+    // Add objects to the menu
+    OBJECT_ASSETS.forEach((object, i) => {
+      const el = document.createElement("a");
+      el.textContent = object.name;
+      el.href = 'javascript:;';
+      el.addEventListener('click', async function () {
+        switchToObject(i);
+      });
+      document.getElementById('menu_list').appendChild(el);
+    });
+
+    // Setup mobile menu button
+    let IS_MOBILE = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+    document.getElementById('mobile_button').addEventListener('click', () => {
+      document.getElementById('menu').classList.toggle('visible');
+    });
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0a0a); // Dark background matching the theme
+    const renderer = new THREE.WebGLRenderer();
+    renderer.shadowMap.enabled = true;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Setup camera
+    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0.9, -1.2);
+
+    // Handle window resize
+    window.addEventListener('resize', onWindowResize, false);
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // Setup mouse controls to orbit the camera around
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0.2, 0, 0);
+    controls.minDistance = 0.8;
+    controls.maxDistance = 2.3;
+    controls.enablePan = false;
+    controls.update();
+
+    // Current and next object splats
+    let currentObject, nextObject;
+    let shadow;
+
+    // Transition length in frames
+    const TRANSITION_LENGTH = IS_MOBILE ? 30 : 60;
+    let fadeOutTime = null;
+    let fadeInTime = null;
+
+    // Preload all splat files
+    let splats = {};
+    
+    async function preloadSplats() {
+      const promises = OBJECT_ASSETS.map(async (obj) => {
+        const splatURL = OBJECTS_URL + obj.file;
+        return new Promise((resolve) => {
+          splats[splatURL] = new SplatMesh({
+            url: splatURL,
+            onLoad: () => resolve(),
+          });
+        });
+      });
+      await Promise.all(promises);
+    }
+    
+    preloadSplats().then(() => {
+      init();
+    });
+
+    async function init() {
+      // Setup lighting
+      const spotLight = new THREE.SpotLight(0xffcc88);
+      spotLight.position.set(0, 1, 0);
+      spotLight.castShadow = true;
+      spotLight.shadow.mapSize.width = 1024;
+      spotLight.shadow.mapSize.height = 1024;
+      spotLight.shadow.camera.near = 0.1;
+      spotLight.shadow.camera.far = 5;
+      spotLight.angle = 0.9;
+      spotLight.penumbra = 1;
+      spotLight.intensity = 6;
+      scene.add(spotLight);
+
+      const fillLight = new THREE.PointLight(0xffffff, 0.8);
+      fillLight.position.set(0, 0, -3);
+      scene.add(fillLight);
+
+      // Splats don't project shadows, so we add a cylinder below the spotlight to fake one
+      const geometry = new THREE.CylinderGeometry(0.45, 0.45, 0.04, 40, 1);
+      const material = new THREE.MeshPhongMaterial({ colorWrite: false, depthWrite: false });
+      shadow = new THREE.Mesh(geometry, material);
+      shadow.visible = false;
+      shadow.castShadow = true;
+      shadow.position.set(0, 0.1, 0);
+      scene.add(shadow);
+
+      // Add floor
+      // const plane = new THREE.PlaneGeometry(10, 10);
+      // const floormat = new THREE.MeshPhongMaterial({ color: 0xdddddd });
+      // const floor = new THREE.Mesh(plane, floormat);
+      // floor.rotation.x = -Math.PI / 2;
+      // floor.position.set(0, -1.397, 0);
+      // scene.add(floor);
+
+      // Show menu
+      document.getElementById('menu').classList.add('visible');
+      if (IS_MOBILE) document.getElementById('mobile_button').classList.add('visible');
+
+      // Load first object by default
+      switchToObject(0);
+
+      // Start render loop
+      renderer.setAnimationLoop(animate);
+    }
+
+    function animate(time) {
+      controls.update();
+      renderer.render(scene, camera);
+      const rotation = time / 10000;
+      
+      // if (currentObject) currentObject.rotation.y = -rotation;
+      // if (nextObject) nextObject.rotation.y = -rotation;
+
+      // Fade out transition
+      if (fadeOutTime !== null) {
+        fadeOutTime++;
+        if (fadeOutTime < TRANSITION_LENGTH) {
+          if (currentObject) currentObject.opacity = 1 - easeInOutSine(fadeOutTime / TRANSITION_LENGTH);
+        } else {
+          // Fade out finished
+          if (currentObject) currentObject.dispose();
+          fadeOutTime = null;
+          // Fade in next object
+          fadeInTime = 0;
+          shadow.visible = true;
+          shadow.scale.setScalar(shadow.nextScale);
+        }
+      }
+
+      // Fade in transition
+      if (fadeInTime != null && nextObject.isInitialized) {
+        fadeInTime++;
+        if (fadeInTime < TRANSITION_LENGTH) {
+          nextObject.opacity = easeInOutSine(fadeInTime / TRANSITION_LENGTH);
+        } else {
+          // Fade in finished
+          currentObject = nextObject;
+          fadeInTime = null;
+        }
+      }
+    }
+
+    // Function to display caption
+    function displayCaption(caption) {
+      const captionText = document.getElementById('caption_text');
+      const captionDisplay = document.getElementById('caption_display');
+      
+      captionText.textContent = caption;
+      captionDisplay.classList.add('visible');
+    }
+
+    // Change object from menu link
+    function switchToObject(objectIndex) {
+      // Already transitioning
+      if (fadeOutTime !== null || fadeInTime !== null) return;
+
+      const objectItem = OBJECT_ASSETS[objectIndex];
+      const splatFile = OBJECTS_URL + objectItem.file;
+
+      nextObject = splats[splatFile];
+      // Combine upright orientation with 180-degree Y-axis rotation to face camera
+      const uprightQuaternion = new THREE.Quaternion(0.707, 0, 0, 0.707);
+      const yRotationQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+      nextObject.quaternion.copy(uprightQuaternion.multiply(yRotationQuaternion));
+
+      // Customize splat depending on the settings set for this object
+      if (objectItem['offsetY']) nextObject.position.set(0, objectItem.offsetY, 0);
+      nextObject.scale.setScalar(objectItem.scale);
+      shadow.nextScale = objectItem.shadowSize;
+
+      // Set opacity to 0 to prepare the fade in transition
+      nextObject.opacity = 0;
+
+      // Setup shadow to the required size, and make it visible only when the splat is initialized
+      nextObject.initialized.then(() => {
+        shadow.visible = false;
+        fadeOutTime = 0; // Start fade out transition
+        
+        // Display the caption for this object
+        displayCaption(objectItem.caption);
+      });
+
+      scene.add(nextObject);
+
+      // Hide menu if on mobile
+      if (IS_MOBILE) document.getElementById('menu').classList.remove('visible');
+
+      // Toggle menu item
+      const menu_items = document.getElementById('menu_list').children;
+      for (let i = 0; i < menu_items.length; i++) {
+        menu_items[i].classList.toggle('active', objectIndex == i);
+      }
+    }
+
+    function easeInOutSine(x) {
+      return -(Math.cos(Math.PI * x) - 1) / 2;
+    }
+
+  </script>
+</body>
+
+</html>

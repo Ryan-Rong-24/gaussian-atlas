@@ -15,7 +15,10 @@ export const GalleryViewer = ({ onBackToLanding }: GalleryViewerProps) => {
       iframe.style.width = '100%';
       iframe.style.height = '100vh';
       iframe.style.border = 'none';
-      iframe.src = 'gallery/gallery.html';
+      
+      // Use the correct path for GitHub Pages deployment
+      const basePath = '/gaussian-atlas/';
+      iframe.src = `${basePath}gallery/gallery.html`;
       
       // Clear existing content and add iframe
       const container = document.getElementById('gallery-container');

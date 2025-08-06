@@ -8,24 +8,23 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onEnterGallery }: HeroSectionProps) => {
   // 15 video samples for the background showcase - using boomerang videos
-  // Use the correct base path for GitHub Pages deployment
-  const basePath = '/gaussian-atlas/';
+  // Use relative paths for GitHub Pages compatibility
   const videoSamples = [
-    `${basePath}video/object1_boomerang.mp4`,
-    `${basePath}video/object2_boomerang.mp4`, 
-    `${basePath}video/object3_boomerang.mp4`,
-    `${basePath}video/object4_boomerang.mp4`,
-    `${basePath}video/object5_boomerang.mp4`,
-    `${basePath}video/object6_boomerang.mp4`,
-    `${basePath}video/object7_boomerang.mp4`,
-    `${basePath}video/object8_boomerang.mp4`,
-    `${basePath}video/object9_boomerang.mp4`,
-    `${basePath}video/object10_boomerang.mp4`,
-    `${basePath}video/object11_boomerang.mp4`,
-    `${basePath}video/object12_boomerang.mp4`,
-    `${basePath}video/object13_boomerang.mp4`,
-    `${basePath}video/object14_boomerang.mp4`,
-    `${basePath}video/object15_boomerang.mp4`,
+    "video/object1_boomerang.mp4",
+    "video/object2_boomerang.mp4", 
+    "video/object3_boomerang.mp4",
+    "video/object4_boomerang.mp4",
+    "video/object5_boomerang.mp4",
+    "video/object6_boomerang.mp4",
+    "video/object7_boomerang.mp4",
+    "video/object8_boomerang.mp4",
+    "video/object9_boomerang.mp4",
+    "video/object10_boomerang.mp4",
+    "video/object11_boomerang.mp4",
+    "video/object12_boomerang.mp4",
+    "video/object13_boomerang.mp4",
+    "video/object14_boomerang.mp4",
+    "video/object15_boomerang.mp4",
   ];
 
   return (

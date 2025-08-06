@@ -8,22 +8,23 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onEnterGallery }: HeroSectionProps) => {
   // 15 video samples for the background showcase - using boomerang videos
+  // Use relative paths for GitHub Pages compatibility
   const videoSamples = [
-    "/video/object1_boomerang.mp4",
-    "/video/object2_boomerang.mp4", 
-    "/video/object3_boomerang.mp4",
-    "/video/object4_boomerang.mp4",
-    "/video/object5_boomerang.mp4",
-    "/video/object6_boomerang.mp4",
-    "/video/object7_boomerang.mp4",
-    "/video/object8_boomerang.mp4",
-    "/video/object9_boomerang.mp4",
-    "/video/object10_boomerang.mp4",
-    "/video/object11_boomerang.mp4",
-    "/video/object12_boomerang.mp4",
-    "/video/object13_boomerang.mp4",
-    "/video/object14_boomerang.mp4",
-    "/video/object15_boomerang.mp4",
+    "video/object1_boomerang.mp4",
+    "video/object2_boomerang.mp4", 
+    "video/object3_boomerang.mp4",
+    "video/object4_boomerang.mp4",
+    "video/object5_boomerang.mp4",
+    "video/object6_boomerang.mp4",
+    "video/object7_boomerang.mp4",
+    "video/object8_boomerang.mp4",
+    "video/object9_boomerang.mp4",
+    "video/object10_boomerang.mp4",
+    "video/object11_boomerang.mp4",
+    "video/object12_boomerang.mp4",
+    "video/object13_boomerang.mp4",
+    "video/object14_boomerang.mp4",
+    "video/object15_boomerang.mp4",
   ];
 
   return (

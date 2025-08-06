@@ -15,7 +15,7 @@ export const GalleryViewer = ({ onBackToLanding }: GalleryViewerProps) => {
       iframe.style.width = '100%';
       iframe.style.height = '100vh';
       iframe.style.border = 'none';
-      iframe.src = '/index.html'; // Point to the actual index.html file
+      iframe.src = '/gallery/gallery.html'; // Point to the gallery in the subdirectory
       
       // Clear existing content and add iframe
       const container = document.getElementById('gallery-container');

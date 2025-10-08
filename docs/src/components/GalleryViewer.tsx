@@ -34,7 +34,7 @@ export const GalleryViewer = ({ onBackToLanding }: GalleryViewerProps) => {
       <Button
         onClick={onBackToLanding}
         variant="outline"
-        className="absolute top-6 left-6 z-50 bg-background/80 backdrop-blur border-border hover:border-primary hover:bg-primary/5 transition-all duration-300"
+        className="absolute top-6 left-6 z-50 bg-background/80 backdrop-blur border-border text-white hover:text-white hover:border-primary hover:bg-primary/5 transition-all duration-300"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Landing

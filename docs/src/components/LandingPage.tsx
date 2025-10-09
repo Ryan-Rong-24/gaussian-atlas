@@ -142,7 +142,7 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
             <p>
               Renderings are sampled from{' '}
               <a 
-                href="https://gobjaverse.github.io/" 
+                href="https://aigc3d.github.io/gobjaverse/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
@@ -153,7 +153,7 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
             <p>
               3DGS fitting methods are based on{' '}
               <a 
-                href="https://github.com/EDGS-R/EDGS" 
+                href="https://compvis.github.io/EDGS/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"

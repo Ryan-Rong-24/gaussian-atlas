@@ -43,7 +43,7 @@ export const HeroSection = ({ onEnterGallery }: HeroSectionProps) => {
         </p>
 
         {/* Navigation Buttons */}
-        <div className="flex flex-wrap gap-3 justify-center items-center mb-20 animate-scale-in" style={{ animationDelay: '0.4s' }}>
+        <div className="flex flex-wrap gap-3 justify-center items-center mb-6 animate-scale-in" style={{ animationDelay: '0.4s' }}>
           <Button 
             size="lg" 
             onClick={() => scrollToSection('features')}
@@ -62,16 +62,6 @@ export const HeroSection = ({ onEnterGallery }: HeroSectionProps) => {
           >
             <DownloadIcon className="mr-2 w-4 h-4" />
             Download
-          </Button>
-          
-          <Button 
-            size="lg" 
-            onClick={() => window.open('https://github.com/ryanrong/gaussian-atlas', '_blank')}
-            className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/30 transition-all duration-300 px-6 py-3 hover-scale"
-            variant="outline"
-          >
-            <Github className="mr-2 w-4 h-4" />
-            Quick Start
           </Button>
           
           <Button 
@@ -101,6 +91,20 @@ export const HeroSection = ({ onEnterGallery }: HeroSectionProps) => {
           >
             Gallery
             <ArrowRight className="ml-2 w-4 h-4" />
+          </Button>
+        </div>
+
+        {/* The 3D Gen Playground - Featured Button */}
+        <div className="flex justify-center mb-20 animate-scale-in" style={{ animationDelay: '0.5s' }}>
+          <Button 
+            size="lg" 
+            onClick={() => window.open('https://github.com/tiangexiang/3DGen-Playground', '_blank')}
+            className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 border-0 transition-all duration-300 px-10 py-6 text-lg hover-scale shadow-2xl hover:shadow-purple-500/50"
+          >
+            <Github className="mr-3 w-6 h-6 text-white" />
+            <span className="font-bold tracking-wide text-white">
+              The 3D Gen Playground
+            </span>
           </Button>
         </div>
 

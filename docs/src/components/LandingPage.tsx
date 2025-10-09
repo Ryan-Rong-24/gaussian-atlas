@@ -18,17 +18,17 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
             <div className="flex gap-4 items-start p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all">
               <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-xl font-semibold mb-2">Large-scale</h3>
+                <h3 className="text-xl font-semibold mb-2">Large scale</h3>
                 <p className="text-muted-foreground">
-                  254,919 unique fittings, including 81,956 high-aesthetic samples (score &gt; 5). 
-                  <a 
+                  254,919 unique fittings, including 81,956 high-aesthetic samples (score &gt; 5). <span className="font-bold italic">More high quality fittings coming soon!!</span>
+                  {/* <a 
                     href="https://github.com/LAION-AI/aesthetic-predictor" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-flex items-center ml-1 text-primary hover:underline"
                   >
                     <ExternalLink className="w-3 h-3 ml-1" />
-                  </a>
+                  </a> */}
                 </p>
               </div>
             </div>
@@ -38,7 +38,7 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
               <div>
                 <h3 className="text-xl font-semibold mb-2">High quality</h3>
                 <p className="text-muted-foreground">
-                  3D Gaussian splats reconstructed with a state-of-the-art optimization pipeline, totaling &gt; 1.2 GPU-years of compute.
+                  3D Gaussian splats reconstructed with an optimized state-of-the-art pipeline, totaling several GPU-years of compute.
                 </p>
               </div>
             </div>
@@ -46,9 +46,9 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
             <div className="flex gap-4 items-start p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all">
               <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-xl font-semibold mb-2">User-friendly</h3>
+                <h3 className="text-xl font-semibold mb-2">User friendly</h3>
                 <p className="text-muted-foreground">
-                  Plug-and-play PyTorch dataloader with step-by-step instructions, plus conversion scripts to export into WebDataset shards for maximum I/O efficiency.
+                  Plug-and-play PyTorch dataloader with step-by-step instructions, plus handy preprocessing scripts to accelerate your data loading.
                 </p>
               </div>
             </div>
@@ -58,7 +58,7 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Rapid idea tryout</h3>
                 <p className="text-muted-foreground">
-                  A "playground" that lets you drop in your generative model for swift prototyping and idea testing.
+                  <span className="font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">"The 3D Gen Playground"</span> that lets you drop in your model for swift prototyping and idea testing.
                 </p>
               </div>
             </div>
@@ -69,7 +69,19 @@ export const LandingPage = ({ onEnterGallery }: LandingPageProps) => {
       {/* Download Section */}
       <section id="download" className="py-20 px-6 bg-muted/30">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Download</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">Download</h2>
+          <p className="text-sm text-muted-foreground text-center mb-12">
+            We provide helper scripts at{' '}
+            <a 
+              href="https://github.com/tiangexiang/3DGen-Playground" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600"
+            >
+              "The 3D Gen Playground"
+            </a>
+            {' '}for automatic downloading.
+          </p>
           
           {/* Metadata Files */}
           <div className="mb-8">

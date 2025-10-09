@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/', // Root path for own server
+  base: '/~xtiange/projects/gaussianverse/', // Root path for own server
   server: {
     host: "::",
     port: 8080,
